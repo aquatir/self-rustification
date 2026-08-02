@@ -1,4 +1,4 @@
-use std::io;
+use std::{cmp::Ordering, io};
 
 use rand::Rng;
 
@@ -7,9 +7,8 @@ fn main() {
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Print input your guess.");
-
     loop {
+        println!("Please input your guess.");
         let mut guess = String::new();
 
         io::stdin()
@@ -30,14 +29,12 @@ fn main() {
 
         println!("You guessed : {guess}");
 
-        if secret_number == guess {
-            println!("You guessed correctly!");
-            break;
-        } else {
-            if guess > secret_number {
-                println!("Your number is greated than secret number");
-            } else {
-                println!("Your number is lower than secret number");
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small!"),
+            Ordering::Greater => println!("Too big!"),
+            Ordering::Equal => {
+                println!("You win!");
+                break;
             }
         }
     }
