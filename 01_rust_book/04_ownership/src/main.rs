@@ -14,7 +14,63 @@ fn main() {
     slices();
 }
 
-fn slices() {}
+fn slices() {
+    let mut str = String::from("hello, world");
+    let first_space = first_word(&str);
+    println!("first word of string is '{}'", &str[0..first_space]);
+
+    let s = String::from("hello");
+
+    // diff ways to use slices
+    let slice = &s[0..2];
+    let slice = &s[..2];
+    let len = s.len();
+
+    let slice = &s[3..len];
+    let slice = &s[3..];
+
+    // you can drop both so these 2 calls are equal
+    let slice = &s[0..len];
+    let slice = &s[..];
+
+    let substring = first_word_slice(&str);
+    println!("first work of a string sliced is {substring}");
+
+    // this won't work anymore, because &str borrows a string as immutable,
+    // but clear is applied on mutalbe only
+    // works without a println (before usage)
+
+    // str.clear();
+    // println!("first work of a string sliced is {substring}");
+
+    let a = [1, 2, 3, 4, 5];
+    let slice = &a[1..3];
+    assert_eq!(slice, &[2, 3]);
+}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
+}
+
+fn first_word_slice(s: &str) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[..i];
+        }
+    }
+
+    &s[..]
+}
 
 fn pointers() {
     let s1 = String::from("hello");
