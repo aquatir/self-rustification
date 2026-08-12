@@ -98,6 +98,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "rust_book_enums_pattern_matching"
+version = "0.1.0"
+
+[[package]]
 name = "rust_book_ownership"
 version = "0.1.0"
 
